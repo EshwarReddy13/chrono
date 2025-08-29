@@ -95,6 +95,10 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
 
 ```
 chrono/
+├── docs/                       # Project documentation
+│   ├── DESIGN.md              # Technical design document
+│   ├── PHASES.md              # Development phases
+│   └── requirements.md        # Project requirements
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   ├── components/             # React components
