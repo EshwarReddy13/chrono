@@ -2,22 +2,21 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   currentPage: string;
+  onMinimizeChange?: (isMinimized: boolean) => void;
 }
 
-export default function Navbar({ currentPage }: NavbarProps) {
+export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
   const [isMinimized, setIsMinimized] = useState(false);
-
+  const router = useRouter();
+  
   const toggleMinimized = () => {
     const newState = !isMinimized;
     setIsMinimized(newState);
-    
-    // Emit custom event for layout wrapper
-    window.dispatchEvent(new CustomEvent('navbar-toggle', {
-      detail: { isMinimized: newState }
-    }));
+    onMinimizeChange?.(newState);
   };
   
   const { currentUser, logout } = useAuth();
@@ -31,9 +30,11 @@ export default function Navbar({ currentPage }: NavbarProps) {
   ];
 
   const handleNavigation = (page: string) => {
-    window.dispatchEvent(new CustomEvent('navigate-to', {
-      detail: { page }
-    }));
+    if (page === 'dashboard') {
+      router.push('/dashboard');
+    } else {
+      router.push(`/${page}`);
+    }
   };
 
   const handleLogout = async () => {
