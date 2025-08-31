@@ -33,7 +33,7 @@ export async function initializeDatabase(): Promise<void> {
       ORDER BY table_name
     `);
     
-    console.log('Created tables:', tables.rows.map((row: any) => row.table_name));
+    console.log('Created tables:', tables.rows.map((row: unknown) => (row as { table_name: string }).table_name));
     console.log('Expected: users table');
     
   } catch (error) {
@@ -93,7 +93,7 @@ export async function checkDatabaseStatus(): Promise<{
       WHERE table_schema = 'public'
     `);
     
-    const tableCount = parseInt(tables.rows[0].count);
+    const tableCount = parseInt((tables.rows[0] as { count: string }).count);
     const tablesExist = tableCount > 0;
     
     return {

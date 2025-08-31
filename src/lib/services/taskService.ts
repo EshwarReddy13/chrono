@@ -40,7 +40,7 @@ export async function createTask(taskData: CreateTaskData): Promise<Task> {
     taskData.description || null
   ]);
 
-  return result.rows[0];
+  return result.rows[0] as Task;
 }
 
 /**
@@ -53,7 +53,7 @@ export async function getTasksByProjectId(projectId: string): Promise<Task[]> {
     ORDER BY created_at DESC
   `, [projectId]);
 
-  return result.rows;
+  return result.rows as Task[];
 }
 
 /**
@@ -68,7 +68,7 @@ export async function getTasksByUserId(userId: string): Promise<Task[]> {
     ORDER BY t.created_at DESC
   `, [userId]);
 
-  return result.rows;
+  return result.rows as Task[];
 }
 
 /**
@@ -82,7 +82,7 @@ export async function getTaskById(id: string): Promise<Task | null> {
     WHERE t.id = $1
   `, [id]);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Task) || null;
 }
 
 /**
@@ -119,7 +119,7 @@ export async function updateTask(id: string, taskData: UpdateTaskData): Promise<
     RETURNING *
   `, values);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Task) || null;
 }
 
 /**
@@ -152,5 +152,9 @@ export async function getTaskStatsByProjectId(projectId: string): Promise<{
     WHERE project_id = $1
   `, [projectId]);
 
-  return result.rows[0];
+  return result.rows[0] as {
+    total: number;
+    completed: number;
+    pending: number;
+  };
 }

@@ -5,7 +5,7 @@ import LoginForm from '@/components/login/LoginForm';
 import SignupForm from '@/components/login/SignupForm';
 
 export default function AuthPage() {
-  const [showSignup, setShowSignup] = useState(() => {
+  const [showSignup] = useState(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get('signup') === 'true';

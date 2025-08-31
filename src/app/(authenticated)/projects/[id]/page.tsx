@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -39,17 +39,10 @@ export default function ProjectDetailPage() {
   const [project, setProject] = useState<Project | null>(null);
   const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState(false);
+  // const [editing, setEditing] = useState(false); // TODO: Implement edit functionality
   const [showTasks, setShowTasks] = useState(false);
 
-  useEffect(() => {
-    if (id && currentUser) {
-      fetchProjectDetails();
-      fetchTimeEntries();
-    }
-  }, [id, currentUser]);
-
-  const fetchProjectDetails = async () => {
+  const fetchProjectDetails = useCallback(async () => {
     try {
       const response = await fetch(`/api/projects/${id}`, {
         headers: {
@@ -69,9 +62,9 @@ export default function ProjectDetailPage() {
       console.error('Error fetching project:', error);
       router.push('/projects');
     }
-  };
+  }, [id, currentUser, router]);
 
-  const fetchTimeEntries = async () => {
+  const fetchTimeEntries = useCallback(async () => {
     try {
       const response = await fetch(`/api/projects/${id}/time-entries`, {
         headers: {
@@ -89,7 +82,14 @@ export default function ProjectDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, currentUser]);
+
+  useEffect(() => {
+    if (id && currentUser) {
+      fetchProjectDetails();
+      fetchTimeEntries();
+    }
+  }, [id, currentUser, fetchProjectDetails, fetchTimeEntries]);
 
   const formatTime = (seconds: number) => {
     const hours = seconds / 3600;
@@ -114,7 +114,8 @@ export default function ProjectDetailPage() {
   };
 
   const handleEditProject = () => {
-    setEditing(true);
+    // TODO: Implement edit functionality
+    console.log('Edit project:', project?.id);
   };
 
   const handleDeleteProject = async () => {
@@ -316,34 +317,36 @@ export default function ProjectDetailPage() {
       </Card>
 
       {/* Tasks Section */}
-      <Card className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] shadow-lg mt-8">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-xl text-white">Tasks</CardTitle>
-            <Button
-              variant="ghost"
-              onClick={() => setShowTasks(!showTasks)}
-              className="p-2 text-gray-400 hover:text-white"
-            >
-              {showTasks ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {showTasks ? (
-            <div className="space-y-4">
-              <TaskList 
-                projectId={project.id} 
-                currentUserId={currentUser.uid} 
-              />
+      {currentUser && (
+        <Card className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] shadow-lg mt-8">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl text-white">Tasks</CardTitle>
+              <Button
+                variant="ghost"
+                onClick={() => setShowTasks(!showTasks)}
+                className="p-2 text-gray-400 hover:text-white"
+              >
+                {showTasks ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+              </Button>
             </div>
-          ) : (
-            <div className="text-center py-8 text-gray-400">
-              Click the arrow to view and manage tasks for this project
-            </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardHeader>
+          <CardContent>
+            {showTasks ? (
+              <div className="space-y-4">
+                <TaskList 
+                  projectId={project.id} 
+                  currentUserId={currentUser.uid} 
+                />
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-400">
+                Click the arrow to view and manage tasks for this project
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

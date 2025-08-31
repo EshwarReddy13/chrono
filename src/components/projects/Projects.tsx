@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -66,7 +66,7 @@ export default function Projects() {
     }
   };
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     if (!currentUser) return;
     
     try {
@@ -88,11 +88,13 @@ export default function Projects() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
-    fetchProjects();
-  }, [currentUser]);
+    if (currentUser) {
+      fetchProjects();
+    }
+  }, [currentUser, fetchProjects]);
 
   const formatTime = (seconds: number) => {
     const hours = seconds / 3600;

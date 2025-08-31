@@ -42,7 +42,7 @@
 **UI:** shadcn/ui + Tailwind CSS  
 **Database:** Neon PostgreSQL (serverless)  
 **Authentication:** Firebase Auth  
-**Hosting:** Vercel  
+**Hosting:** Firebase Hosting  
 
 ## 🎯 What We're Building
 
@@ -58,11 +58,15 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
 
 ## 🚀 Getting Started
 
+### Live Demo
+🌐 **Frontend**: [chrono-b4542.web.app](https://chrono-b4542.web.app)
+
+⚠️ **Important Note**: The frontend is currently in active development and may appear janky or incomplete. Please use at your own discretion and avoid sending too many requests to prevent IP banning.
+
 ### Prerequisites
 - Node.js 18+ and pnpm
 - Neon PostgreSQL account
 - Firebase project
-- Vercel account (optional for development)
 
 ### Quick Start
 
@@ -87,12 +91,12 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
    - Follow the [Database Setup Guide](docs/DATABASE_SETUP.md) to configure Neon PostgreSQL
    - Run `node scripts/test-db.js` to test the connection
 
-4. **Start the development server**
+5. **Start the development server**
    ```bash
    pnpm dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 🏗️ Project Structure

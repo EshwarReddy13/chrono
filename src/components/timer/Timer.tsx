@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTimer } from '@/contexts/TimerContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Pause, Square, Clock, FolderOpen, CheckCircle } from 'lucide-react';
+import { Play, Pause, Square, Clock, FolderOpen } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -28,19 +28,7 @@ export default function Timer() {
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showPostStopModal, setShowPostStopModal] = useState(false);
 
-  useEffect(() => {
-    if (currentUser) {
-      fetchProjects();
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (currentUser) {
-      fetchProjects();
-    }
-  }, [currentUser]);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const response = await fetch('/api/projects', {
         headers: {
@@ -55,7 +43,13 @@ export default function Timer() {
     } catch (error) {
       console.error('Failed to fetch projects:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchProjects();
+    }
+  }, [currentUser, fetchProjects]);
 
   const fetchTasks = async (projectId: string) => {
     try {

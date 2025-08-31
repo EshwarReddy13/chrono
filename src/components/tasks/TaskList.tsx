@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 
 import { Plus } from 'lucide-react';
@@ -28,11 +28,7 @@ export default function TaskList({ projectId, currentUserId }: TaskListProps) {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
-  useEffect(() => {
-    fetchTasks();
-  }, [projectId]);
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const response = await fetch(`/api/projects/${projectId}/tasks`, {
         headers: {
@@ -49,9 +45,15 @@ export default function TaskList({ projectId, currentUserId }: TaskListProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, currentUserId]);
 
-  const createTask = async (taskData: any) => {
+  useEffect(() => {
+    if (projectId) {
+      fetchTasks();
+    }
+  }, [projectId, fetchTasks, currentUserId]);
+
+  const createTask = async (taskData: { name: string; description: string }) => {
     try {
       const response = await fetch('/api/tasks', {
         method: 'POST',
@@ -74,7 +76,7 @@ export default function TaskList({ projectId, currentUserId }: TaskListProps) {
     }
   };
 
-  const updateTask = async (taskData: any) => {
+  const updateTask = async (taskData: { name: string; description: string }) => {
     if (!editingTask) return;
 
     try {

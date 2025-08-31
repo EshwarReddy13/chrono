@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react'; // TODO: Re-enable when implementing loading state
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Edit, Trash2, Play, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Edit, Trash2, Play, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -31,7 +31,7 @@ export default function TaskCard({
   onStartTimer, 
   onToggleComplete 
 }: TaskCardProps) {
-  const [isUpdating, setIsUpdating] = useState(false);
+  // const [isUpdating, setIsUpdating] = useState(false); // TODO: Implement loading state for toggle
 
   const getCompletionStatus = (isCompleted: boolean) => {
     return isCompleted ? 'Completed' : 'Pending';
@@ -49,14 +49,7 @@ export default function TaskCard({
     return new Date(dateString).toLocaleDateString();
   };
 
-  const handleToggleComplete = async () => {
-    setIsUpdating(true);
-    try {
-      await onToggleComplete(task.id, !task.is_completed);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+
 
   return (
     <Card className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] shadow-lg hover:shadow-xl transition-all duration-200">
@@ -122,7 +115,7 @@ export default function TaskCard({
             onClick={() => onToggleComplete(task.id, !task.is_completed)}
             size="sm"
             variant="outline"
-            disabled={isUpdating}
+                         disabled={false}
             className={`w-full text-sm ${
               task.is_completed 
                 ? 'bg-green-600 text-white border-green-600' 

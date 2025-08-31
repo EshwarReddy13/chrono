@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTaskById, updateTask, deleteTask } from '@/lib/services/taskService';
 import { getUserByFirebaseUid } from '@/lib/services/userService';
+import { getProjectById } from '@/lib/services/projectService';
 
 export async function GET(
   request: NextRequest,
@@ -38,8 +39,9 @@ export async function GET(
       }, { status: 404 });
     }
 
-    // Check if the task belongs to the user
-    if (task.user_id !== user.id) {
+    // Check if the task belongs to the user through the project
+    const project = await getProjectById(task.project_id);
+    if (!project || project.user_id !== user.id) {
       return NextResponse.json({
         success: false,
         error: 'Unauthorized access to task'
@@ -98,8 +100,9 @@ export async function PUT(
       }, { status: 404 });
     }
 
-    // Check if the task belongs to the user
-    if (existingTask.user_id !== user.id) {
+    // Check if the task belongs to the user through the project
+    const project = await getProjectById(existingTask.project_id);
+    if (!project || project.user_id !== user.id) {
       return NextResponse.json({
         success: false,
         error: 'Unauthorized access to task'
@@ -172,8 +175,9 @@ export async function DELETE(
       }, { status: 404 });
     }
 
-    // Check if the task belongs to the user
-    if (existingTask.user_id !== user.id) {
+    // Check if the task belongs to the user through the project
+    const project = await getProjectById(existingTask.project_id);
+    if (!project || project.user_id !== user.id) {
       return NextResponse.json({
         success: false,
         error: 'Unauthorized access to task'

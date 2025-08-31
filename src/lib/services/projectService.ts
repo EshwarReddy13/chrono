@@ -45,7 +45,7 @@ export async function createProject(projectData: CreateProjectData): Promise<Pro
     projectData.color || '#F4D03F'
   ]);
 
-  return result.rows[0];
+  return result.rows[0] as Project;
 }
 
 /**
@@ -58,7 +58,7 @@ export async function getProjectsByUserId(userId: string): Promise<Project[]> {
     ORDER BY created_at DESC
   `, [userId]);
 
-  return result.rows;
+  return result.rows as Project[];
 }
 
 /**
@@ -69,7 +69,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
     SELECT * FROM projects WHERE id = $1
   `, [id]);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Project) || null;
 }
 
 /**
@@ -110,7 +110,7 @@ export async function updateProject(id: string, projectData: UpdateProjectData):
     RETURNING *
   `, values);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Project) || null;
 }
 
 /**
@@ -129,7 +129,7 @@ export async function deleteProject(id: string): Promise<boolean> {
 /**
  * Get project with time entries summary
  */
-export async function getProjectWithTimeSummary(projectId: string): Promise<any> {
+export async function getProjectWithTimeSummary(projectId: string): Promise<Project & { total_time_seconds: number; total_entries: number } | null> {
   const result = await query(`
     SELECT 
       p.*,
@@ -141,13 +141,13 @@ export async function getProjectWithTimeSummary(projectId: string): Promise<any>
     GROUP BY p.id
   `, [projectId]);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Project & { total_time_seconds: number; total_entries: number }) || null;
 }
 
 /**
  * Get projects with time summary for a user
  */
-export async function getProjectsWithTimeSummary(userId: string): Promise<any[]> {
+export async function getProjectsWithTimeSummary(userId: string): Promise<(Project & { total_time_seconds: number; total_entries: number })[]> {
   const result = await query(`
     SELECT 
       p.*,
@@ -160,5 +160,5 @@ export async function getProjectsWithTimeSummary(userId: string): Promise<any[]>
     ORDER BY p.created_at DESC
   `, [userId]);
 
-  return result.rows;
+  return result.rows as (Project & { total_time_seconds: number; total_entries: number })[];
 }

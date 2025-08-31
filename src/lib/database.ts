@@ -63,7 +63,7 @@ export async function getClient(): Promise<PoolClient> {
 /**
  * Execute a query with parameters
  */
-export async function query(text: string, params?: any[]): Promise<any> {
+export async function query(text: string, params?: unknown[]): Promise<{ rows: unknown[]; rowCount: number | null }> {
   const client = await getClient();
   try {
     const result = await client.query(text, params);

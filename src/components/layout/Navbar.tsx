@@ -14,7 +14,7 @@ interface NavbarProps {
 export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
   const [isMinimized, setIsMinimized] = useState(false);
   const router = useRouter();
-  const { timerState, startTimer, continueTimer, pauseTimer, stopTimer } = useTimer();
+  const { timerState, continueTimer, pauseTimer, stopTimer } = useTimer();
   
   const toggleMinimized = () => {
     const newState = !isMinimized;

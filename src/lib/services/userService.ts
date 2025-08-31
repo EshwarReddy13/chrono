@@ -63,7 +63,7 @@ export async function createUser(userData: CreateUserData): Promise<User> {
     userData.theme || 'dark'
   ]);
 
-  return result.rows[0];
+  return result.rows[0] as User;
 }
 
 /**
@@ -74,7 +74,7 @@ export async function getUserByFirebaseUid(firebaseUid: string): Promise<User | 
     SELECT * FROM users WHERE firebase_uid = $1
   `, [firebaseUid]);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as User) || null;
 }
 
 /**
@@ -85,7 +85,7 @@ export async function getUserById(id: string): Promise<User | null> {
     SELECT * FROM users WHERE id = $1
   `, [id]);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as User) || null;
 }
 
 /**
@@ -130,7 +130,7 @@ export async function updateUser(id: string, userData: UpdateUserData): Promise<
     RETURNING *
   `, values);
 
-  return result.rows[0] || null;
+  return (result.rows[0] as User) || null;
 }
 
 /**

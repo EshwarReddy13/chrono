@@ -20,13 +20,12 @@ interface Task {
 interface TaskFormProps {
   projectId: string;
   task?: Task | null;
-  onSubmit: (taskData: any) => Promise<void>;
+  onSubmit: (taskData: { name: string; description: string }) => Promise<void>;
   onCancel: () => void;
   isEditing?: boolean;
 }
 
 export default function TaskForm({ 
-  projectId, 
   task, 
   onSubmit, 
   onCancel, 
