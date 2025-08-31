@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useTimer } from '@/contexts/TimerContext';
+import { Clock, Play, Pause, Square } from 'lucide-react';
 
 interface NavbarProps {
   currentPage: string;
@@ -12,6 +14,7 @@ interface NavbarProps {
 export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
   const [isMinimized, setIsMinimized] = useState(false);
   const router = useRouter();
+  const { timerState, startTimer, continueTimer, pauseTimer, stopTimer } = useTimer();
   
   const toggleMinimized = () => {
     const newState = !isMinimized;
@@ -79,6 +82,80 @@ export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
                      <h1 className="text-2xl font-bold text-[#F4D03F]">Chrono</h1>
         )}
       </div>
+
+      {/* Timer Display Section */}
+      {(timerState.isRunning || timerState.time > 0) && (
+        <div 
+          className={`border-b border-[rgba(189,189,189,0.2)] flex-shrink-0 cursor-pointer hover:bg-[rgba(255,255,255,0.05)] transition-colors ${
+            isMinimized ? 'px-2 py-3' : 'px-4 py-4'
+          }`}
+          onClick={() => router.push('/timer')}
+        >
+          {isMinimized ? (
+            <div className="text-center">
+              <div className="text-xs text-[#F4D03F] font-mono mb-2">
+                {Math.floor(timerState.time / 60)}:{(timerState.time % 60).toString().padStart(2, '0')}
+              </div>
+                             <div className="flex justify-center space-x-1">
+                 {timerState.isRunning ? (
+                   <button
+                     onClick={(e) => { e.stopPropagation(); pauseTimer(); }}
+                     className="p-1 bg-[#F4D03F] text-gray-900 rounded hover:bg-[#F7DC6F] transition-colors"
+                   >
+                     <Pause className="w-3 h-3" />
+                   </button>
+                 ) : (
+                   <button
+                     onClick={(e) => { e.stopPropagation(); continueTimer(); }}
+                     className="p-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                   >
+                     <Play className="w-3 h-3" />
+                   </button>
+                 )}
+                 <button
+                   onClick={(e) => { e.stopPropagation(); stopTimer(); }}
+                   className="p-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                 >
+                   <Square className="w-3 h-3" />
+                 </button>
+               </div>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center text-[#F4D03F]">
+                <Clock className="w-4 h-4 mr-2" />
+                <span className="text-sm font-medium">Timer Running</span>
+              </div>
+              <div className="text-2xl font-mono text-white">
+                {Math.floor(timerState.time / 3600)}:{(Math.floor(timerState.time / 60) % 60).toString().padStart(2, '0')}:{(timerState.time % 60).toString().padStart(2, '0')}
+              </div>
+                             <div className="flex space-x-2">
+                 {timerState.isRunning ? (
+                   <button
+                     onClick={(e) => { e.stopPropagation(); pauseTimer(); }}
+                     className="flex-1 bg-[#F4D03F] text-gray-900 text-xs py-1 px-2 rounded hover:bg-[#F7DC6F] transition-colors"
+                   >
+                     Pause
+                   </button>
+                 ) : (
+                   <button
+                     onClick={(e) => { e.stopPropagation(); continueTimer(); }}
+                     className="flex-1 bg-green-500 text-white text-xs py-1 px-2 rounded hover:bg-green-600 transition-colors"
+                   >
+                     Continue
+                   </button>
+                 )}
+                 <button
+                   onClick={(e) => { e.stopPropagation(); stopTimer(); }}
+                   className="flex-1 bg-red-500 text-white text-xs py-1 px-2 rounded hover:bg-red-600 transition-colors"
+                 >
+                   Stop
+                 </button>
+               </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Navigation Section - Takes remaining space */}
       <div className={`flex-1 overflow-y-auto ${

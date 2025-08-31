@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { TimerProvider } from "@/contexts/TimerContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,7 +26,9 @@ export default function RootLayout({
         className={`${poppins.variable} font-poppins antialiased`}
       >
         <AuthProvider>
-          {children}
+          <TimerProvider>
+            {children}
+          </TimerProvider>
         </AuthProvider>
       </body>
     </html>
