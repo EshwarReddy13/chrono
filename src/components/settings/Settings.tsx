@@ -76,7 +76,7 @@ export default function Settings() {
               
               <Button
                 onClick={handleProfileUpdate}
-                className="mt-4 bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]"
+                                 className="mt-4 bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
               >
                 Update Profile
               </Button>
@@ -239,25 +239,25 @@ export default function Settings() {
                 <div className="p-4 bg-[rgba(255,255,255,0.05)] rounded-lg">
                   <h4 className="text-white font-medium mb-2">Export Time Entries</h4>
                   <p className="text-gray-400 text-sm mb-4">Download all your time tracking data in CSV format</p>
-                  <Button className="bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]">
-                    Export CSV
-                  </Button>
+                                     <Button className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200">
+                     Export CSV
+                   </Button>
                 </div>
 
                 <div className="p-4 bg-[rgba(255,255,255,0.05)] rounded-lg">
                   <h4 className="text-white font-medium mb-2">Export Projects</h4>
                   <p className="text-gray-400 text-sm mb-4">Download your project data and configurations</p>
-                  <Button className="bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]">
-                    Export JSON
-                  </Button>
+                                     <Button className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200">
+                     Export JSON
+                   </Button>
                 </div>
 
                 <div className="p-4 bg-[rgba(255,255,255,0.05)] rounded-lg">
                   <h4 className="text-white font-medium mb-2">Full Data Export</h4>
                   <p className="text-gray-400 text-sm mb-4">Download all your data including settings and preferences</p>
-                  <Button className="bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]">
-                    Export All
-                  </Button>
+                                     <Button className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200">
+                     Export All
+                   </Button>
                 </div>
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function Settings() {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full justify-start ${
                       activeTab === tab.id
-                        ? 'bg-[#FFFF00] text-gray-900'
+                        ? 'bg-[#F4D03F] text-black border-2 border-black'
                         : 'text-gray-300 hover:bg-[rgba(255,255,255,0.1)] hover:text-white'
                     }`}
                   >

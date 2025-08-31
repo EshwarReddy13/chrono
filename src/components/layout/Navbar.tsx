@@ -55,7 +55,7 @@ export default function Navbar({ currentPage }: NavbarProps) {
       {/* Toggle Button */}
       <button
         onClick={toggleMinimized}
-        className="absolute -right-3 top-8 bg-[#FFFF00] text-gray-900 p-1 rounded-full shadow-lg hover:bg-[#F2EC9B] transition-colors duration-200 transform hover:scale-110"
+        className="absolute -right-3 top-8 bg-[#F4D03F] text-gray-900 p-1 rounded-full shadow-lg hover:bg-[#F7DC6F] transition-colors duration-200 transform hover:scale-110"
         aria-label={isMinimized ? 'Expand sidebar' : 'Minimize sidebar'}
       >
         <svg 
@@ -71,11 +71,11 @@ export default function Navbar({ currentPage }: NavbarProps) {
       {/* Logo Section - Fixed at top */}
       <div className="flex items-center h-16 px-6 border-b border-[rgba(189,189,189,0.2)] flex-shrink-0">
         {isMinimized ? (
-          <div className="w-8 h-8 bg-[#FFFF00] rounded-lg flex items-center justify-center mx-auto">
-            <span className="text-lg font-bold text-gray-900">C</span>
-          </div>
+                     <div className="w-8 h-8 bg-[#F4D03F] rounded-lg flex items-center justify-center mx-auto">
+             <span className="text-lg font-bold text-gray-900">C</span>
+           </div>
         ) : (
-          <h1 className="text-2xl font-bold text-[#FFFF00]">Chrono</h1>
+                     <h1 className="text-2xl font-bold text-[#F4D03F]">Chrono</h1>
         )}
       </div>
 
@@ -95,7 +95,7 @@ export default function Navbar({ currentPage }: NavbarProps) {
                   : 'px-3 py-2'
               } ${
                 isActive
-                  ? 'bg-[#FFFF00] text-gray-900'
+                  ? 'bg-[#F4D03F] text-gray-900'
                   : 'text-gray-300 hover:bg-[rgba(255,255,255,0.1)] hover:text-white'
               }`}
               title={isMinimized ? item.name : undefined}
@@ -130,7 +130,7 @@ export default function Navbar({ currentPage }: NavbarProps) {
           <div className="space-y-2">
             {/* User Avatar - Centered */}
             <div className="flex justify-center">
-              <div className="h-8 w-8 rounded-full bg-[#FFFF00] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-full bg-[#F4D03F] flex items-center justify-center">
                 <span className="text-sm font-medium text-gray-900">
                   {currentUser.displayName?.charAt(0) || currentUser.email?.charAt(0) || 'U'}
                 </span>
@@ -152,7 +152,7 @@ export default function Navbar({ currentPage }: NavbarProps) {
           <div className="space-y-3">
             {/* User Info */}
             <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 rounded-full bg-[#FFFF00] flex items-center justify-center">
+              <div className="h-8 w-8 rounded-full bg-[#F4D03F] flex items-center justify-center">
                 <span className="text-sm font-medium text-gray-900">
                   {currentUser.displayName?.charAt(0) || currentUser.email?.charAt(0) || 'U'}
                 </span>

@@ -56,7 +56,7 @@ export default function Timer() {
             <Button
               size="lg"
               onClick={startTimer}
-              className="bg-[#FFFF00] text-gray-900 px-8 py-4 h-14 text-lg font-semibold hover:bg-[#F2EC9B]"
+                              className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] px-8 py-4 h-14 text-lg font-semibold transition-all duration-200"
             >
               Start Timer
             </Button>

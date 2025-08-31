@@ -90,12 +90,12 @@ export default function Projects() {
           <p className="text-gray-300">Manage your projects and track progress</p>
         </div>
         
-        <Button
-          onClick={() => setShowCreateForm(true)}
-          className="bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]"
-        >
-          + New Project
-        </Button>
+                 <Button
+           onClick={() => setShowCreateForm(true)}
+           className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
+         >
+           + New Project
+         </Button>
       </div>
 
       {/* Create Project Form */}
@@ -140,12 +140,12 @@ export default function Projects() {
             </div>
             
             <div className="flex space-x-3">
-              <Button
-                onClick={createProject}
-                className="bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B]"
-              >
-                Create Project
-              </Button>
+                             <Button
+                 onClick={createProject}
+                 className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
+               >
+                 Create Project
+               </Button>
               <Button
                 variant="outline"
                 onClick={() => setShowCreateForm(false)}

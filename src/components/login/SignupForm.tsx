@@ -172,7 +172,7 @@ export default function SignupForm() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-sm font-medium rounded-xl text-gray-900 bg-[#FFFF00] hover:bg-[#F2EC9B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="group relative w-full flex justify-center py-3 px-6 border-2 border-black text-sm font-medium rounded-xl text-black bg-[#F4D03F] hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F4D03F] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
             >
               {loading ? 'Creating account...' : 'Create account'}
             </button>

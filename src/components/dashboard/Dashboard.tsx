@@ -25,11 +25,11 @@ export default function Dashboard() {
             <CardTitle className="text-xl text-white">Quick Start Timer</CardTitle>
           </CardHeader>
           <CardContent className="text-center">
-            <div className="text-6xl font-bold text-[#FFFF00] mb-4 font-mono">00:00:00</div>
+                         <div className="text-6xl font-bold text-[#F4D03F] mb-4 font-mono">00:00:00</div>
             <div className="space-y-3">
               <Button 
                 size="lg" 
-                className="w-full bg-[#FFFF00] text-gray-900 hover:bg-[#F2EC9B] h-12 text-base"
+                className="w-full bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] h-12 text-base transition-all duration-200"
               >
                 Start Timer
               </Button>
@@ -52,15 +52,15 @@ export default function Dashboard() {
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Hours Tracked</span>
-              <span className="text-2xl font-bold text-[#FFFF00]">0h 0m</span>
+                              <span className="text-2xl font-bold text-[#F4D03F]">0h 0m</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Tasks Completed</span>
-              <span className="text-2xl font-bold text-[#FFFF00]">0</span>
+                              <span className="text-2xl font-bold text-[#F4D03F]">0</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-300">Productivity Score</span>
-              <Badge variant="secondary" className="text-[#FFFF00] bg-[rgba(255,255,255,0.1)] border-[rgba(189,189,189,0.4)]">
+                              <Badge variant="secondary" className="text-[#F4D03F] bg-[rgba(255,255,255,0.1)] border-[rgba(189,189,189,0.4)]">
                 --
               </Badge>
             </div>

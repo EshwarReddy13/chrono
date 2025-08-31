@@ -16,7 +16,7 @@ export default function Reports() {
   };
 
   const projectData = [
-    { name: 'Work Project', time: 24.5, percentage: 58, color: '#FFFF00' },
+    { name: 'Work Project', time: 24.5, percentage: 58, color: '#F4D03F' },
     { name: 'Personal Learning', time: 12.0, percentage: 28, color: '#34A853' },
     { name: 'Side Project', time: 6.0, percentage: 14, color: '#4285F4' }
   ];
@@ -153,7 +153,7 @@ export default function Reports() {
                   <div className="w-full bg-[rgba(255,255,255,0.1)] rounded-full h-2">
                     <div
                       className={`h-2 rounded-full ${
-                        day.time >= day.goal ? 'bg-[#34A853]' : 'bg-[#FFFF00]'
+                        day.time >= day.goal ? 'bg-[#34A853]' : 'bg-[#F4D03F]'
                       }`}
                       style={{ width: `${Math.min((day.time / day.goal) * 100, 100)}%` }}
                     />
