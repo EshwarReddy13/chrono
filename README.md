@@ -79,9 +79,13 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
 
 3. **Set up environment variables**
    ```bash
-   cp .env.example .env.local
+   cp env.example .env.local
    # Fill in your Neon and Firebase credentials
    ```
+
+4. **Set up database**
+   - Follow the [Database Setup Guide](docs/DATABASE_SETUP.md) to configure Neon PostgreSQL
+   - Run `node scripts/test-db.js` to test the connection
 
 4. **Start the development server**
    ```bash
@@ -98,12 +102,19 @@ chrono/
 ├── docs/                       # Project documentation
 │   ├── DESIGN.md              # Technical design document
 │   ├── PHASES.md              # Development phases
-│   └── requirements.md        # Project requirements
+│   ├── requirements.md        # Project requirements
+│   └── DATABASE_SETUP.md      # Database setup guide
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   ├── components/             # React components
 │   ├── lib/                    # Utilities and helpers
+│   │   ├── database.ts         # Database connection
+│   │   ├── init-db.ts          # Database initialization
+│   │   ├── schema.sql          # Database schema
+│   │   └── services/           # Database services
 │   └── types/                  # TypeScript definitions
+├── scripts/                    # Utility scripts
+│   └── test-db.js             # Database connection test
 ├── mobile/                     # React Native app
 ├── desktop/                    # Electron app
 └── shared/                     # Shared code between platforms
@@ -120,6 +131,10 @@ pnpm build            # Build for production
 pnpm start            # Start production server
 pnpm lint             # Run ESLint
 pnpm type-check       # Run TypeScript type checking
+
+# Database
+node scripts/test-db.js  # Test database connection
+```
 
 # Testing
 pnpm test             # Run unit tests

@@ -74,26 +74,7 @@ export default function MainLayout() {
           isNavbarMinimized ? 'pl-16' : 'pl-64'
         }`}
       >
-        {/* Page Header */}
-        <header className="bg-[rgba(33,33,33,0.9)] backdrop-blur-[16px] border-b border-[rgba(189,189,189,0.2)]">
-          <div className="flex items-center justify-between h-16 px-6">
-            <div>
-              <h1 className="text-xl font-semibold text-white capitalize">
-                {currentPage}
-              </h1>
-            </div>
-            
-            {/* Notifications */}
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.1)] rounded-lg transition-colors duration-200">
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M9 11h.01M9 8h.01" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </header>
+
 
         {/* Dynamic Page Content */}
         <main className="p-6">

@@ -23,6 +23,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updateUserProfile: (displayName: string) => Promise<void>;
+  ensureUserInDatabase: (user: User) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,9 +46,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       setLoading(false);
+      
+      // Ensure user exists in database when auth state changes
+      if (user) {
+        await ensureUserInDatabase(user);
+      }
     });
 
     return unsubscribe;
@@ -55,7 +61,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      await ensureUserInDatabase(user);
       router.push('/');
     } catch (error) {
       console.error('Sign in error:', error);
@@ -65,7 +72,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      await ensureUserInDatabase(result.user);
       router.push('/');
     } catch (error) {
       console.error('Google sign in error:', error);
@@ -77,6 +85,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user, { displayName });
+      await ensureUserInDatabase(user);
       router.push('/');
     } catch (error) {
       console.error('Sign up error:', error);
@@ -114,6 +123,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const ensureUserInDatabase = async (user: User) => {
+    try {
+      console.log('Ensuring user in database:', user.uid, user.email);
+      
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firebase_uid: user.uid,
+          email: user.email,
+          display_name: user.displayName,
+          avatar_url: user.photoURL,
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (!result.success) {
+        console.error('Failed to ensure user in database:', result.error);
+      } else {
+        console.log('User ensured in database:', result.message);
+      }
+    } catch (error) {
+      console.error('Error ensuring user in database:', error);
+    }
+  };
+
   const value: AuthContextType = {
     currentUser,
     loading,
@@ -123,6 +161,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     resetPassword,
     updateUserProfile,
+    ensureUserInDatabase,
   };
 
   return (
