@@ -1,84 +1,108 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-
+import { Badge } from '@/components/ui/badge';
 
 interface Project {
   id: string;
+  user_id: string;
   name: string;
-  description: string;
+  description?: string;
   color: string;
-  totalTime: number;
-  tasks: Task[];
-}
-
-interface Task {
-  id: string;
-  name: string;
-  completed: boolean;
-  estimatedTime: number;
-  actualTime: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  total_time_seconds?: number;
+  total_entries?: number;
 }
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: '1',
-      name: 'Work Project',
-      description: 'Main work project for Q1',
-      color: '#FFFF00',
-      totalTime: 24.5,
-      tasks: [
-        { id: '1', name: 'Design Review', completed: true, estimatedTime: 2, actualTime: 2.5 },
-        { id: '2', name: 'Code Implementation', completed: false, estimatedTime: 8, actualTime: 6 },
-        { id: '3', name: 'Testing', completed: false, estimatedTime: 4, actualTime: 0 },
-      ]
-    },
-    {
-      id: '2',
-      name: 'Personal Learning',
-      description: 'Learning new technologies',
-      color: '#34A853',
-      totalTime: 12.0,
-      tasks: [
-        { id: '4', name: 'React Study', completed: true, estimatedTime: 6, actualTime: 8 },
-        { id: '5', name: 'TypeScript Practice', completed: false, estimatedTime: 4, actualTime: 2 },
-      ]
-    }
-  ]);
+  const { currentUser } = useAuth();
+  const router = useRouter();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newProject, setNewProject] = useState({
     name: '',
     description: '',
-    color: '#FFFF00'
+    color: '#F4D03F'
   });
 
-  const createProject = () => {
-    if (newProject.name.trim()) {
-      const project: Project = {
-        id: Date.now().toString(),
-        name: newProject.name,
-        description: newProject.description,
-        color: newProject.color,
-        totalTime: 0,
-        tasks: []
-      };
+  const createProject = async () => {
+    if (!currentUser || !newProject.name.trim()) return;
+    
+    try {
+      const response = await fetch('/api/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${currentUser.uid}`
+        },
+        body: JSON.stringify({
+          name: newProject.name,
+          description: newProject.description,
+          color: newProject.color
+        }),
+      });
+
+      const result = await response.json();
       
-      setProjects([...projects, project]);
-      setNewProject({ name: '', description: '', color: '#FFFF00' });
-      setShowCreateForm(false);
+      if (result.success) {
+        // Refresh projects list
+        fetchProjects();
+        setNewProject({ name: '', description: '', color: '#F4D03F' });
+        setShowCreateForm(false);
+      } else {
+        console.error('Failed to create project:', result.error);
+      }
+    } catch (error) {
+      console.error('Error creating project:', error);
     }
   };
 
-  const formatTime = (hours: number) => {
+  const fetchProjects = async () => {
+    if (!currentUser) return;
+    
+    try {
+      const response = await fetch('/api/projects', {
+        headers: {
+          'Authorization': `Bearer ${currentUser.uid}`
+        }
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setProjects(result.projects);
+      } else {
+        console.error('Failed to fetch projects:', result.error);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, [currentUser]);
+
+  const formatTime = (seconds: number) => {
+    const hours = seconds / 3600;
     const wholeHours = Math.floor(hours);
     const minutes = Math.round((hours - wholeHours) * 60);
     return `${wholeHours}h ${minutes}m`;
+  };
+
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/projects/${projectId}`);
   };
 
   return (
@@ -90,12 +114,12 @@ export default function Projects() {
           <p className="text-gray-300">Manage your projects and track progress</p>
         </div>
         
-                 <Button
-           onClick={() => setShowCreateForm(true)}
-           className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
-         >
-           + New Project
-         </Button>
+        <Button
+          onClick={() => setShowCreateForm(true)}
+          className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
+        >
+          + New Project
+        </Button>
       </div>
 
       {/* Create Project Form */}
@@ -140,12 +164,12 @@ export default function Projects() {
             </div>
             
             <div className="flex space-x-3">
-                             <Button
-                 onClick={createProject}
-                 className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
-               >
-                 Create Project
-               </Button>
+              <Button
+                onClick={createProject}
+                className="bg-[#F4D03F] text-black border-2 border-black hover:bg-black hover:text-[#F4D03F] hover:border-[#F4D03F] transition-all duration-200"
+              >
+                Create Project
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => setShowCreateForm(false)}
@@ -159,80 +183,117 @@ export default function Projects() {
       )}
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {projects.map((project) => (
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="text-gray-400">Loading projects...</div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Project Cards */}
+          {projects.map((project) => (
+            <Card
+              key={project.id}
+              className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer group"
+              onClick={() => handleProjectClick(project.id)}
+            >
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: project.color }}
+                    />
+                    <div>
+                      <CardTitle className="text-xl text-white group-hover:text-[#F4D03F] transition-colors">
+                        {project.name}
+                      </CardTitle>
+                      {project.description && (
+                        <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                          {project.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="pt-0">
+                {/* Project Stats */}
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#F4D03F]">
+                        {project.total_time_seconds ? formatTime(project.total_time_seconds) : '0h 0m'}
+                      </div>
+                      <div className="text-gray-400 text-xs">Total Time</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-white">
+                        {project.total_entries || 0}
+                      </div>
+                      <div className="text-gray-400 text-xs">Entries</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-xs text-gray-400">
+                    <span>Created: {new Date(project.created_at).toLocaleDateString()}</span>
+                    <Badge 
+                      variant={project.is_active ? "default" : "secondary"}
+                      className={project.is_active ? "bg-green-600" : "bg-gray-600"}
+                    >
+                      {project.is_active ? "Active" : "Inactive"}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="flex space-x-2 pt-3 border-t border-[rgba(189,189,189,0.2)]">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="flex-1 bg-[rgba(255,255,255,0.05)] text-white hover:bg-[rgba(255,255,255,0.1)] text-xs"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // TODO: Start timer for this project
+                    }}
+                  >
+                    ⏱️ Start Timer
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="flex-1 bg-[rgba(255,255,255,0.05)] text-white hover:bg-[rgba(255,255,255,0.1)] text-xs"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // TODO: Add task to this project
+                    }}
+                  >
+                    ➕ Add Task
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+
+          {/* Add New Project Card */}
           <Card
-            key={project.id}
-            className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] shadow-lg"
+            className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border-2 border-dashed border-[rgba(189,189,189,0.4)] shadow-lg hover:border-[#F4D03F] hover:shadow-xl transition-all duration-200 cursor-pointer group"
+            onClick={() => setShowCreateForm(true)}
           >
-            <CardHeader>
-              {/* Project Header */}
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: project.color }}
-                  />
-                  <div>
-                    <CardTitle className="text-xl text-white">{project.name}</CardTitle>
-                    <p className="text-gray-400 text-sm">{project.description}</p>
-                  </div>
-                </div>
-                
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-[#FFFF00]">
-                    {formatTime(project.totalTime)}
-                  </div>
-                  <div className="text-gray-400 text-sm">Total Time</div>
-                </div>
+            <CardContent className="flex flex-col items-center justify-center h-48 p-6">
+              <div className="text-4xl text-gray-400 group-hover:text-[#F4D03F] transition-colors mb-3">
+                ➕
               </div>
-            </CardHeader>
-
-            <CardContent>
-              {/* Tasks */}
-              <div className="space-y-3 mb-4">
-                <h4 className="text-sm font-medium text-gray-300 uppercase tracking-wide">Tasks</h4>
-                {project.tasks.map((task) => (
-                  <div key={task.id} className="flex items-center justify-between p-3 bg-[rgba(255,255,255,0.05)] rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <Checkbox
-                        checked={task.completed}
-                        onCheckedChange={() => {}}
-                        className="text-[#FFFF00] border-gray-500 data-[state=checked]:bg-[#FFFF00] data-[state=checked]:border-[#FFFF00]"
-                      />
-                      <span className={`text-sm ${task.completed ? 'line-through text-gray-500' : 'text-white'}`}>
-                        {task.name}
-                      </span>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="text-xs text-gray-400">
-                        Est: {formatTime(task.estimatedTime)}
-                      </div>
-                      <div className="text-xs text-[#FFFF00]">
-                        Act: {formatTime(task.actualTime)}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Project Actions */}
-              <div className="flex space-x-2 pt-4 border-t border-[rgba(189,189,189,0.2)]">
-                <Button variant="ghost" size="sm" className="flex-1 bg-[rgba(255,255,255,0.05)] text-white hover:bg-[rgba(255,255,255,0.1)]">
-                  Add Task
-                </Button>
-                <Button variant="ghost" size="sm" className="flex-1 bg-[rgba(255,255,255,0.05)] text-white hover:bg-[rgba(255,255,255,0.1)]">
-                  Start Timer
-                </Button>
-                <Button variant="ghost" size="sm" className="flex-1 bg-[rgba(255,255,255,0.05)] text-white hover:bg-[rgba(255,255,255,0.1)]">
-                  Edit
-                </Button>
-              </div>
+              <CardTitle className="text-xl text-white group-hover:text-[#F4D03F] transition-colors text-center">
+                Add New Project
+              </CardTitle>
+              <p className="text-gray-400 text-sm text-center mt-2">
+                Create a new project to start tracking your time
+              </p>
             </CardContent>
           </Card>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
