@@ -40,12 +40,9 @@ export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+  const handleLogoutClick = () => {
+    // Dispatch event to DashboardLayout
+    window.dispatchEvent(new CustomEvent('logout-click'));
   };
 
   if (!currentUser) {
@@ -218,11 +215,11 @@ export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
             {/* Logout Button - Centered */}
             <div className="flex justify-center">
               <button
-                onClick={handleLogout}
+                onClick={handleLogoutClick}
                 className="w-8 h-8 bg-[rgba(255,255,255,0.1)] rounded-lg flex items-center justify-center text-gray-300 hover:bg-[rgba(255,255,255,0.2)] hover:text-white transition-colors duration-200"
                 title="Sign Out"
               >
-                <span>🚪</span>
+                <span>➜]</span>
               </button>
             </div>
           </div>
@@ -247,10 +244,10 @@ export default function Navbar({ currentPage, onMinimizeChange }: NavbarProps) {
             
             {/* Logout Button */}
             <button
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
               className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-300 rounded-lg hover:bg-[rgba(255,255,255,0.1)] hover:text-white transition-colors duration-200"
             >
-              <span className="mr-3">🚪</span>
+              <span className="mr-3">➜]</span>
               Sign Out
             </button>
           </div>
