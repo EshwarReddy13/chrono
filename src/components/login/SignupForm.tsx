@@ -79,9 +79,10 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+    <div className="w-full flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-lg w-full space-y-8">
-                 <div className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] rounded-xl p-8 shadow-lg">
+        {/* Glass effect container */}
+        <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl">
           <div>
             <h2 className="mt-2 text-center text-3xl font-extrabold text-white">
               Create your Chrono account
@@ -111,7 +112,7 @@ export default function SignupForm() {
                 required
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                 placeholder="Enter your full name"
               />
             </div>
@@ -128,7 +129,7 @@ export default function SignupForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                 placeholder="Enter your email"
               />
             </div>
@@ -145,7 +146,7 @@ export default function SignupForm() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                 placeholder="Create a password"
               />
             </div>
@@ -162,7 +163,7 @@ export default function SignupForm() {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                 placeholder="Confirm your password"
               />
             </div>
@@ -190,7 +191,7 @@ export default function SignupForm() {
                type="button"
                onClick={handleGoogleSignIn}
                disabled={googleLoading}
-               className="w-full flex justify-center items-center py-3 px-6 border border-gray-500/50 rounded-xl shadow-sm text-sm font-medium text-gray-200 bg-[rgba(33,33,33,0.5)] hover:bg-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl backdrop-blur-sm"
+               className="w-full flex justify-center items-center py-3 px-6 border border-gray-500/50 rounded-xl shadow-sm text-sm font-medium text-gray-200 bg-[rgba(33,33,33)] hover:bg-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl backdrop-blur-sm"
              >
               <GoogleIcon />
               <span className="ml-2">
