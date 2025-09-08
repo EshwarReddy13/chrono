@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   title: "Chrono - Time Tracking Application",
   description: "Cross-platform time tracking application with AI-driven productivity insights",
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
+    icon: '/icon.ico',
+    shortcut: '/icon.ico',
     apple: '/apple-touch-icon.png',
   },
 };
