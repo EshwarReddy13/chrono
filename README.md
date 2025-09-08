@@ -59,7 +59,7 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
 ## 🚀 Getting Started
 
 ### Live Demo
-🌐 **Frontend**: [chrono-b4542.web.app](https://chrono-b4542.web.app)
+🌐 **Frontend**: [chrono-b4542.web.app](https:/chronoai.site)
 
 ⚠️ **Important Note**: The frontend is currently in active development and may appear janky or incomplete. Please use at your own discretion and avoid sending too many requests to prevent IP banning.
 
