@@ -14,8 +14,24 @@ export default function AuthPage() {
   });
 
   return (
-    <div className="min-h-screen">
-      {showSignup ? <SignupForm /> : <LoginForm />}
-    </div>
+    <>
+      
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          backgroundImage: 'url(/assets/images/background.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        
+        {/* Login/Signup Form */}
+        <div className="relative z-20 w-full flex justify-center">
+          {showSignup ? <SignupForm /> : <LoginForm />}
+        </div>
+      </div>
+    </>
   );
 }

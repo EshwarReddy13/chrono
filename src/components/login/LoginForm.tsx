@@ -67,12 +67,13 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-                 <div className="backdrop-blur-[16px] saturate-[180%] bg-[rgba(33,33,33,0.9)] border border-[rgba(189,189,189,0.4)] rounded-xl p-8 shadow-lg">
+    <div className="w-full py-12">
+      <div className="w-full max-w-md mx-auto space-y-8">
+        {/* Glass effect container */}
+        <div className="w-full backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-              Sign in to Chrono
+              Log in to Chrono
             </h2>
             <p className="mt-2 text-center text-sm text-gray-300">
               Track your time, boost your productivity
@@ -99,7 +100,7 @@ export default function LoginForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                  className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                   placeholder="Enter your email"
                 />
               </div>
@@ -116,7 +117,7 @@ export default function LoginForm() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33,0.5)] text-white placeholder-gray-400 backdrop-blur-sm"
+                  className="mt-1 block w-full px-3 py-3 border border-gray-500/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-[#FFFF00] bg-[rgba(33,33,33)] text-white placeholder-gray-400 backdrop-blur-sm"
                   placeholder="Enter your password"
                 />
               </div>
@@ -136,7 +137,7 @@ export default function LoginForm() {
                   <div className="w-full border-t border-gray-500/50" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                                     <span className="px-2 bg-[rgba(33,33,33,0.9)] text-gray-400">Or continue with</span>
+                                     <span className="px-2 bg-white/10 text-gray-400">Or continue with</span>
                 </div>
               </div>
               
@@ -144,7 +145,7 @@ export default function LoginForm() {
                  type="button"
                  onClick={handleGoogleSignIn}
                  disabled={googleLoading}
-                 className="w-full flex justify-center items-center py-3 px-6 border border-gray-500/50 rounded-xl shadow-sm text-sm font-medium text-gray-200 bg-[rgba(33,33,33,0.5)] hover:bg-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl backdrop-blur-sm"
+                 className="w-full flex justify-center items-center py-3 px-6 border border-gray-500/50 rounded-xl shadow-sm text-sm font-medium text-gray-200 bg-[rgba(33,33,33)] hover:bg-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl backdrop-blur-sm"
                >
                 <GoogleIcon />
                 <span className="ml-2">

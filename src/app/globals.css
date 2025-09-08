@@ -79,7 +79,7 @@
 body {
   background: #121212 !important; /* bg-gray-900 equivalent */
   background-image: 
-    linear-gradient(rgba(189,189,189,0.03) 1px, transparent 1px),
+    linear-gradient(#bdbdbd08 1px, transparent 1px),
     linear-gradient(90deg, rgba(189,189,189,0.03) 1px, transparent 1px) !important;
   background-size: 42px 42px !important;
   font-family: var(--font-poppins), system-ui, sans-serif;
@@ -154,5 +154,10 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    background-image: url('/assets/images/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 }
