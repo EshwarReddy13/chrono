@@ -1,5 +1,5 @@
 # Chrono - Cross-Platform Time Tracking Application
-## Live website: [ChronoAI](https:/chronoai.site)
+## Live website: [ChronoAI](https://chronoai.site)
 
 [![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -60,7 +60,7 @@ Chrono is designed to be the ultimate time tracking solution for individuals and
 ## 🚀 Getting Started
 
 ### Live Demo
-🌐 **Frontend**: [ChronoAI](https:/chronoai.site)
+🌐 **Frontend**: [ChronoAI](https://chronoai.site)
 
 ⚠️ **Important Note**: The frontend is currently in active development and may appear janky or incomplete. Please use at your own discretion and avoid sending too many requests to prevent IP banning.
 
